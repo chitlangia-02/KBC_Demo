@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaun Banega Crorepati</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container" id="game-container">
+        <div class="header">
+            <h1>Kaun Banega Crorepati</h1>
+        </div>
+        <div class="question-container">
+            <div class="timer" id="timer">45</div>
+            <div class="question" id="question"></div>
+            <div class="options">
+                <button class="option" id="optionA" onclick="checkAnswer('A')"></button>
+                <button class="option" id="optionB" onclick="checkAnswer('B')"></button>
+                <button class="option" id="optionC" onclick="checkAnswer('C')"></button>
+                <button class="option" id="optionD" onclick="checkAnswer('D')"></button>
+            </div>
+            <div id="result"></div>
+        </div>
+        <div class="lifelines" id="lifelines">
+            <button id="phone" onclick="useLifeline('phone')">Phone a Friend</button>
+            <button id="5050" onclick="useLifeline('5050')">50-50</button>
+            <button id="poll" onclick="useLifeline('poll')">Audience Poll</button>
+            <button id="change" onclick="useLifeline('change')">Change the Question</button>
+        </div>
+        <div>
+            <button id="restart-timer" onclick="restartTimer()" style="display:none;">Restart Timer</button>
+            <button id="next-question" onclick="nextQuestion()" style="display:none;">Next Question</button>
+        </div>
+    </div>
+    <div id="black-screen" class="black-screen" style="display:none;">
+        <h1>SAMAY SAMAPT</h1>
+        <button id="next-set" onclick="nextSet()">Next Set</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
