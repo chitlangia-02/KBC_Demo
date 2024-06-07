@@ -64,7 +64,7 @@ function showTimeUp() {
     highlightCorrectAnswer();
     setTimeout(() => {
         blackScreen.style.display = 'flex';
-    }, 10000);
+    }, 3000);
 }
 
 function checkAnswer(selectedOption) {
@@ -103,10 +103,13 @@ function useLifeline(lifeline) {
             hideTwoIncorrectOptions();
             break;
         case 'poll':
-            alert('Audience Poll results: 80% chose the correct option');
+            alert('Audience Poll Starts');
+            restartTimerButton.style.display = 'block';
             break;
         case 'change':
             changeQuestion();
+            // Hide the 'change' lifeline button
+            document.getElementById('change').style.display = 'none';
             break;
         default:
             break;
@@ -116,17 +119,6 @@ function useLifeline(lifeline) {
     document.getElementById(lifeline).classList.add('used');
     usedLifelines[currentSetIndex] = usedLifelines[currentSetIndex] || {};
     usedLifelines[currentSetIndex][lifeline] = true;
-
-    // Check if all lifelines have been used for this set
-    if (Object.keys(usedLifelines[currentSetIndex]).length === Object.keys(options).length) {
-        markAllLifelinesRed();
-    }
-}
-
-function markAllLifelinesRed() {
-    for (let lifeline in options) {
-        document.getElementById(lifeline).classList.add('used');
-    }
 }
 
 function hideTwoIncorrectOptions() {
@@ -168,17 +160,23 @@ function resetGame() {
     startTimer();
 
     // Reset lifelines color when changing sets
-    for (let lifeline in options) {
+    const lifelines = ['phone', '5050', 'poll', 'change'];
+    lifelines.forEach(lifeline => {
         document.getElementById(lifeline).classList.remove('used');
-    }
+        document.getElementById(lifeline).style.display = 'block'; // Make sure all lifelines are visible again
+    });
 
     // Reactivate lifelines for the current set
     if (usedLifelines[currentSetIndex]) {
         for (let lifeline in usedLifelines[currentSetIndex]) {
             document.getElementById(lifeline).classList.add('used');
+            if (lifeline === 'change') {
+                document.getElementById('change').style.display = 'none'; // Hide the 'change' lifeline if it has been used
+            }
         }
     }
 }
+
 function nextQuestion() {
     currentQuestionIndex++;
     if (currentQuestionIndex >= setsOfQuestions[currentSetIndex].length) {
@@ -188,11 +186,11 @@ function nextQuestion() {
 }
 
 function nextSet() {
-    
     // Reset lifelines color when changing sets
     const lifelines = ['phone', '5050', 'poll', 'change'];
     lifelines.forEach(lifeline => {
         document.getElementById(lifeline).classList.remove('used');
+        document.getElementById(lifeline).style.display = 'block'; // Make sure all lifelines are visible again
     });
     usedLifelines = {}; // Reset used lifelines object
     currentSetIndex++;
@@ -201,7 +199,6 @@ function nextSet() {
     }
     currentQuestionIndex = 0;
     loadQuestion();
-
 }
 
 loadQuestion();
