@@ -38,6 +38,10 @@ const gameContainer = document.getElementById('game-container');
 const blackScreen = document.getElementById('black-screen');
 const lifelinesContainer = document.getElementById('lifelines');
 
+// Create audio objects
+const wrongAnswerAudio = new Audio('wrong-answer.mp3');
+const nextQuestionAudio = new Audio('next-question.mp3');
+
 function startTimer() {
     isPaused = false;
     restartTimerButton.style.display = 'none';
@@ -79,6 +83,8 @@ function checkAnswer(selectedOption) {
         options[selectedOption].classList.add('incorrect');
         highlightCorrectAnswer();
         document.getElementById('result').textContent = 'Wrong!';
+        // Play wrong answer audio
+        wrongAnswerAudio.play();
         setTimeout(() => {
             blackScreen.style.display = 'flex';
         }, 10000);
@@ -144,6 +150,8 @@ function loadQuestion() {
     options.C.textContent = `C: ${currentQuestion.options.C}`;
     options.D.textContent = `D: ${currentQuestion.options.D}`;
     resetGame();
+    // Play next question audio
+    nextQuestionAudio.play();
 }
 
 function resetGame() {
